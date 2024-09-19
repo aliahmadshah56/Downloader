@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -7,31 +6,46 @@ import 'package:get/get.dart';
 
 class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
 
   @override
   void onInit() {
     super.onInit();
     initConnectivity();
+    // Listen to connectivity changes with List<ConnectivityResult> type
     _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+        _connectivity.onConnectivityChanged.listen((results) {
+          // Handle the list of results here
+          if (results.isNotEmpty) {
+            _updateConnectionStatus(results.first);
+          }
+        });
   }
 
   Future<void> initConnectivity() async {
-    ConnectivityResult result;
+    List<ConnectivityResult> results;
     try {
-      result = await _connectivity.checkConnectivity();
-      return _updateConnectionStatus(result);
+      results = await _connectivity.checkConnectivity();
+      if (results.isNotEmpty) {
+        _updateConnectionStatus(results.first);  // Pass the first result
+      }
     } on PlatformException catch (e) {
       debugPrint(e.toString());
     }
   }
 
-  _updateConnectionStatus(ConnectivityResult result) {
+  void _updateConnectionStatus(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-      Get.dialog(
+      if (Get.isDialogOpen == false) {
+        Get.dialog(
           barrierDismissible: false,
           CupertinoAlertDialog(
+            title: const Text('No Connection'),
+            content: const Text(
+              'Please check your internet connectivity!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15),
+            ),
             actions: [
               CupertinoButton.filled(
                 onPressed: () {
@@ -41,10 +55,9 @@ class NetworkController extends GetxController {
                 child: const Text("Retry"),
               )
             ],
-            title: const Text('No Connection'),
-            content: const Text('Please check your internet connectivity!',
-                textAlign: TextAlign.center, style: TextStyle(fontSize: 15)),
-          ));
+          ),
+        );
+      }
     } else {
       if (Get.isSnackbarOpen) {
         Get.closeCurrentSnackbar();

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import '../service/network_controller.dart';
 import '../service/permission_controller.dart';
-import '../service/share_receive_controller.dart';
 import '../utils/constants.dart';
 
 class PermissionBinding extends Bindings {
@@ -12,6 +11,6 @@ class PermissionBinding extends Bindings {
     Get.put(YoutubeHelper());
     Get.put(PlaylistHelper());
     Get.put(NetworkController());
-    Get.put(ShareReceiveController());
+    //Get.put(ShareReceiveController());
   }
 }

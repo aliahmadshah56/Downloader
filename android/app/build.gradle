@@ -1,47 +1,27 @@
-plugins {
-    id "com.android.application"         // Android application plugin
-    id "kotlin-android"                  // Kotlin plugin for Android
-    id "dev.flutter.flutter-gradle-plugin" // Flutter Gradle plugin
-}
-
 android {
-    namespace = "com.example.downloader"   // The namespace of your application
-    compileSdk = flutter.compileSdkVersion // Compile SDK version, managed by Flutter
-    ndkVersion = flutter.ndkVersion        // NDK version, managed by Flutter
+    namespace 'com.example.downloader' // Replace with your app's namespace
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.downloader" // Replace with your app's applicationId
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8   // Set source compatibility to Java 1.8
-        targetCompatibility = JavaVersion.VERSION_1_8   // Set target compatibility to Java 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8  // Set JVM target to Java 1.8 for Kotlin code
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'  // Specify Kotlin source set
-    }
-
-    defaultConfig {
-        applicationId = "com.example.downloader" // Application ID (change this to your package name)
-        minSdk = 21                               // Minimum SDK version
-        targetSdk = flutter.targetSdkVersion      // Target SDK version, managed by Flutter
-        versionCode = flutter.versionCode         // Version code, managed by Flutter
-        versionName = flutter.versionName         // Version name, managed by Flutter
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     buildTypes {
         release {
-            // For signing the app in release mode (currently using debug signing config)
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
     }
-}
-
-flutter {
-    source = "../.."  // Points to the Flutter project directory
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"  // Kotlin standard library
 }
