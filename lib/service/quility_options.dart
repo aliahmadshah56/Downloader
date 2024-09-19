@@ -9,7 +9,7 @@ void showVideoOptions(context, video, videoNo, isPlaylist) async {
       builder: (context) {
         return AlertDialog(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           title: const Center(child: Text("Select Video Quility!")),
           content: SizedBox(
             height: 180,
@@ -39,7 +39,7 @@ void showVideoOptions(context, video, videoNo, isPlaylist) async {
                           },
                           leading: const Icon(FontAwesomeIcons.youtube),
                           trailing:
-                              const Icon(FontAwesomeIcons.download, size: 20),
+                          const Icon(FontAwesomeIcons.download, size: 20),
                           title: Text(
                               quilityNameConvert(
                                   snapshot.data!.elementAt(index).toString()),

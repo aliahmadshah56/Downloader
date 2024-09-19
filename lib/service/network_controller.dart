@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,6 @@ class NetworkController extends GetxController {
   void onInit() {
     super.onInit();
     initConnectivity();
-    // Corrected StreamSubscription to use ConnectivityResult, not List<ConnectivityResult>
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
@@ -21,34 +21,30 @@ class NetworkController extends GetxController {
     ConnectivityResult result;
     try {
       result = await _connectivity.checkConnectivity();
-      _updateConnectionStatus(result);  // Corrected result type
+      return _updateConnectionStatus(result);
     } on PlatformException catch (e) {
       debugPrint(e.toString());
     }
   }
 
-  void _updateConnectionStatus(ConnectivityResult result) {
+  _updateConnectionStatus(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
       Get.dialog(
-        barrierDismissible: false,
-        CupertinoAlertDialog(
-          title: const Text('No Connection'),
-          content: const Text(
-            'Please check your internet connectivity!',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 15),
-          ),
-          actions: [
-            CupertinoButton.filled(
-              onPressed: () {
-                Navigator.of(Get.overlayContext!).pop();
-                initConnectivity();
-              },
-              child: const Text("Retry"),
-            )
-          ],
-        ),
-      );
+          barrierDismissible: false,
+          CupertinoAlertDialog(
+            actions: [
+              CupertinoButton.filled(
+                onPressed: () {
+                  Navigator.of(Get.overlayContext!).pop();
+                  initConnectivity();
+                },
+                child: const Text("Retry"),
+              )
+            ],
+            title: const Text('No Connection'),
+            content: const Text('Please check your internet connectivity!',
+                textAlign: TextAlign.center, style: TextStyle(fontSize: 15)),
+          ));
     } else {
       if (Get.isSnackbarOpen) {
         Get.closeCurrentSnackbar();

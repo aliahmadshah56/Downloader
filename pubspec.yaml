@@ -34,17 +34,18 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+  cupertino_icons:
   font_awesome_flutter:
   youtube_explode_dart:
-  get: ^4.6.1
+  get:
   path_provider:
   permission_handler:
   percent_indicator:
   video_thumbnail:
   android_intent_plus:
-  connectivity_plus: ^3.0.3
-  receive_sharing_intent: ^1.8.0
+  connectivity_plus:
+  receive_sharing_intent:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

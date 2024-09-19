@@ -20,12 +20,12 @@ class PermissionController extends GetxController {
         // Android-specific logic
         if ((await requestPermission(Permission.storage))) {
           Directory directory1 =
-              Directory('/storage/emulated/0/Download/YoutubeDownloader');
+          Directory('/storage/emulated/0/Download/YoutubeDownloader');
           if (!directory1.existsSync()) {
             directory1.createSync();
           }
           Directory directory2 =
-              Directory('/storage/emulated/0/Download/YoutubeDownloader/.temp');
+          Directory('/storage/emulated/0/Download/YoutubeDownloader/.temp');
           if (!directory2.existsSync()) {
             directory2.createSync();
           }
@@ -33,7 +33,7 @@ class PermissionController extends GetxController {
       } else if (Platform.isIOS) {
         // iOS-specific logic
         if ((await requestPermission(Permission.photos) &&
-                await requestPermission(Permission.microphone)) ||
+            await requestPermission(Permission.microphone)) ||
             await requestPermission(Permission.photos)) {
           Directory tempDir = await getTemporaryDirectory();
           Directory directory1 = Directory('${tempDir.path}/YoutubeDownloader');
@@ -41,7 +41,7 @@ class PermissionController extends GetxController {
             directory1.createSync(recursive: true);
           }
           Directory directory2 =
-              Directory('${tempDir.path}/YoutubeDownloader/.temp');
+          Directory('${tempDir.path}/YoutubeDownloader/.temp');
           if (!directory2.existsSync()) {
             directory2.createSync(recursive: true);
           }
